@@ -8,3 +8,6 @@
 /Tech-Journal-ConsoleApp/Tech-Journal-ConsoleApp/bin/Debug/netcoreapp3.1
 /.vs
 /Tech-Journal-ConsoleApp/.vs/Tech-Journal-ConsoleApp/DesignTimeBuild
+/Tech-Journal-ConsoleApp/Tech-Journal.Test/bin/Debug/netcoreapp3.1
+/Tech-Journal-ConsoleApp/Tech-Journal.Test/obj/Debug/netcoreapp3.1
+/Tech-Journal-ConsoleApp/Tech-Journal.Test/obj
