@@ -8,10 +8,10 @@ using System.Net.Mail;
 namespace Tech_Journal.Test
 {
     [TestFixture]
-    public class TestingJournal
+    public class JournalEntryTests
     {
         [Test]
-        public void ValidateJournalEntry()
+        public void JournalEntries_ShouldReturnCorrectAmountOfJournalEntries()
         {
             var sut = new Journal();
             var sut1 = new List<string> { "test" };
@@ -20,7 +20,7 @@ namespace Tech_Journal.Test
         }
 
         [Test]
-        public void ValidateJournalEntryText()
+        public void JournalEntries_ShouldContainTheUsersInput()
         {
             var sut = new Journal();
             var sut1 = new List<string> {"test"};

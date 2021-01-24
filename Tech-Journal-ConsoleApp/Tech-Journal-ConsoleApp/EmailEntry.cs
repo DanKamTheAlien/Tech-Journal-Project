@@ -9,8 +9,6 @@ namespace Tech_Journal_ConsoleApp
 {
     public class EmailEntry
     {
-        public const string Path = "c:\\temp\\appsettings.txt";
-
         public string ToEmailAddress { get; set; }
 
         public string FromEmailAddress { get; set; }
@@ -22,9 +20,9 @@ namespace Tech_Journal_ConsoleApp
             
         }
 
-        public bool CheckForEmailSettings()
+        public bool CheckForEmailSettings(string path)
         {
-            return File.Exists(Path);
+            return File.Exists(path);
         }
 
         public string GetValidEmailAddress(string email,string reason)
@@ -37,21 +35,21 @@ namespace Tech_Journal_ConsoleApp
             return email;
         }
 
-        public void GenerateSenderEmailSettings(string fromEmailAddress, string emailPassword)
+        public void GenerateSenderEmailSettings(string fromEmailAddress, string emailPassword, string path)
         {
-            using var sw = File.AppendText(Path);
+            using var sw = File.AppendText(path);
             sw.WriteLine(fromEmailAddress);
             sw.WriteLine(emailPassword);
         }
 
-        public void ReadSenderEmailSettings()
+        public void ReadSenderEmailSettings(string path)
         {
-            using var emailSettings = new StreamReader(Path);
+            using var emailSettings = new StreamReader(path);
             FromEmailAddress = emailSettings.ReadLine();
             EmailPassword = emailSettings.ReadLine();
         }
         
-        public void SendEmail( List<string> entry, string userName)
+        public void SendEmail( List<string> entry, string userName, string path)
         {
             var combinedJournalEntries= string.Join(",", entry);
 
@@ -74,7 +72,7 @@ namespace Tech_Journal_ConsoleApp
             catch (SmtpException ex)
             {
                 Console.WriteLine(ex.Message);
-                File.Delete(Path);
+                File.Delete(path);
                 throw;
             }
         }
