@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Net;
@@ -9,10 +10,13 @@ namespace Tech_Journal_ConsoleApp
     public class EmailEntry
     {
         public const string Path = "c:\\temp\\appsettings.txt";
-        private string _toEmailAddress;
-        private string _fromEmailAddress;
-        private string _emailPassword;
-        
+
+        public string ToEmailAddress { get; set; }
+
+        public string FromEmailAddress { get; set; }
+
+        public string EmailPassword { get; set; }
+
         public EmailEntry()
         {
             
@@ -33,54 +37,48 @@ namespace Tech_Journal_ConsoleApp
             return email;
         }
 
-        public void GenerateSenderEmailSettings()
+        public void GenerateSenderEmailSettings(string fromEmailAddress, string emailPassword)
         {
             using var sw = File.AppendText(Path);
-
-            Console.WriteLine("Email Settings were not found. Creating file to store email settings.");
-            _fromEmailAddress = GetValidEmailAddress(_fromEmailAddress, "send from:");
-            sw.WriteLine(_fromEmailAddress);
-
-            Console.WriteLine("Please enter the password for that email address");
-            _emailPassword = Console.ReadLine();
-            sw.WriteLine(_emailPassword);
+            sw.WriteLine(fromEmailAddress);
+            sw.WriteLine(emailPassword);
         }
 
         public void ReadSenderEmailSettings()
         {
             using var emailSettings = new StreamReader(Path);
-            _fromEmailAddress = emailSettings.ReadLine();
-            _emailPassword = emailSettings.ReadLine();
+            FromEmailAddress = emailSettings.ReadLine();
+            EmailPassword = emailSettings.ReadLine();
         }
         
-        public void SendEmail(string entry, string userName)
+        public void SendEmail( List<string> entry, string userName)
         {
-            Console.WriteLine("Sending email");
-            _toEmailAddress = GetValidEmailAddress(_toEmailAddress,"send to:");
+            var combinedJournalEntries= string.Join(",", entry);
 
             try
             {
-                var message = new MailMessage(_fromEmailAddress, _toEmailAddress)
+                var message = new MailMessage(FromEmailAddress, ToEmailAddress)
                 {
-                    Subject = $"Journal Entry for {userName},{DateTime.Now:yyyy-MM-dd}",
-                    Body = @entry
+                    Subject = $"JournalEntries Entry for {userName},{DateTime.Now:yyyy-MM-dd}",
+                    Body = combinedJournalEntries
                 };
                 var smtpClient = new SmtpClient("smtp.gmail.com")
                 {
                     Port = 587,
-                    Credentials = new NetworkCredential(_fromEmailAddress, _emailPassword),
+                    Credentials = new NetworkCredential(FromEmailAddress, EmailPassword),
                     EnableSsl = true,
                 };
                 smtpClient.Send(message);
+
             }
             catch (SmtpException ex)
             {
                 Console.WriteLine(ex.Message);
                 File.Delete(Path);
+                throw;
             }
-
         }
-        public static bool IsValidEmailAddress(string address) => address != null && new EmailAddressAttribute().IsValid(address);
+        public bool IsValidEmailAddress(string address) => address != null && new EmailAddressAttribute().IsValid(address);
 
     }
 }
