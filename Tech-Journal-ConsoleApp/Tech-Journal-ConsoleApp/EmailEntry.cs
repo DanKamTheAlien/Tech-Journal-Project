@@ -7,7 +7,7 @@ using System.Net.Mail;
 
 namespace Tech_Journal_ConsoleApp
 {
-    public class EmailEntry
+    public class EmailEntry : IEmailEntry
     {
         public string ToEmailAddress { get; set; }
 
@@ -15,23 +15,19 @@ namespace Tech_Journal_ConsoleApp
 
         public string EmailPassword { get; set; }
 
-        public EmailEntry()
-        {
-            
-        }
-
         public bool CheckForEmailSettings(string path)
         {
             return File.Exists(path);
         }
 
-        public string GetValidEmailAddress(string email,string reason)
+        public string GetValidEmailAddress(string email, string reason)
         {
             while (!IsValidEmailAddress(email))
             {
                 Console.WriteLine($"Please enter a valid email address to {reason}");
                 email = Console.ReadLine();
             }
+
             return email;
         }
 
@@ -40,6 +36,7 @@ namespace Tech_Journal_ConsoleApp
             using var sw = File.AppendText(path);
             sw.WriteLine(fromEmailAddress);
             sw.WriteLine(emailPassword);
+
         }
 
         public void ReadSenderEmailSettings(string path)
@@ -48,10 +45,10 @@ namespace Tech_Journal_ConsoleApp
             FromEmailAddress = emailSettings.ReadLine();
             EmailPassword = emailSettings.ReadLine();
         }
-        
-        public void SendEmail( List<string> entry, string userName, string path)
+
+        public void SendEmail(List<string> entry, string userName, string path)
         {
-            var combinedJournalEntries= string.Join(",", entry);
+            var combinedJournalEntries = string.Join(",", entry);
 
             try
             {
@@ -64,10 +61,9 @@ namespace Tech_Journal_ConsoleApp
                 {
                     Port = 587,
                     Credentials = new NetworkCredential(FromEmailAddress, EmailPassword),
-                    EnableSsl = true,
+                    EnableSsl = true
                 };
                 smtpClient.Send(message);
-
             }
             catch (SmtpException ex)
             {
@@ -76,7 +72,10 @@ namespace Tech_Journal_ConsoleApp
                 throw;
             }
         }
-        public bool IsValidEmailAddress(string address) => address != null && new EmailAddressAttribute().IsValid(address);
 
+        public bool IsValidEmailAddress(string address)
+        {
+            return address != null && new EmailAddressAttribute().IsValid(address);
+        }
     }
 }

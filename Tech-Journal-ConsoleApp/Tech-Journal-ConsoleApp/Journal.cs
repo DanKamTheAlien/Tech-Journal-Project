@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Tech_Journal_ConsoleApp
 {
-    public class Journal
+    public class Journal: IJournal
     {
         public List<string> JournalEntries { get; }
 
