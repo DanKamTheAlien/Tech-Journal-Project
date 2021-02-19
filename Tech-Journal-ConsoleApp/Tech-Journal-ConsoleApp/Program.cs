@@ -12,6 +12,7 @@ namespace Tech_Journal_ConsoleApp
         {
             _journal = new Journal();
             _sendEmail = new EmailEntry();
+            var test = new Database();
 
             var file = _sendEmail.CheckForEmailSettings(Path);
             if (!file)
@@ -32,6 +33,7 @@ namespace Tech_Journal_ConsoleApp
             var userName = Console.ReadLine();
             Console.WriteLine($"Hello {userName}! Today's Date is {DateTime.Now}");
             var entry = _journal.GetEntryInput();
+            test.WriteEntry(entry);
             _journal.CreateJournalEntry(entry);
             Console.WriteLine("Sending email");
             _sendEmail.ToEmailAddress = _sendEmail.GetValidEmailAddress(_sendEmail.ToEmailAddress, "send to:");

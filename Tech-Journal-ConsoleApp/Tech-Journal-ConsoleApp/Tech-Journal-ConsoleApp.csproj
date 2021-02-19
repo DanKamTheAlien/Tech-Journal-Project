@@ -6,4 +6,8 @@
     <RootNamespace>Tech_Journal_ConsoleApp</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
 </Project>
