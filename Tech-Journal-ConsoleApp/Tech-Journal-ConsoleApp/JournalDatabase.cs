@@ -37,7 +37,7 @@ namespace Tech_Journal_ConsoleApp
         {
             var conn = EstablishConnection();
             StringBuilder strBuilder = new StringBuilder();
-            strBuilder.Append("INSERT INTO Journal_details (Date, Name, Entry) VALUES ");
+            strBuilder.Append("INSERT INTO Journal (Date, Name, Entry) VALUES ");
             strBuilder.Append($"(N'{DateTime.Now:yyyy-MM-dd}', N'{username}', N'{entry}') ");
             string sqlQuery = strBuilder.ToString();
             using (SqlCommand command = new SqlCommand(sqlQuery, conn)) //pass SQL query created above and connection
@@ -52,6 +52,22 @@ namespace Tech_Journal_ConsoleApp
         public void ReadEntryDatabase()
         {
             var conn = EstablishConnection();
+            string sqlQuery = "SELECT Date, Name, Entry FROM Journal";
+            var output = "";
+            SqlCommand command = new SqlCommand(sqlQuery, conn);
+            SqlDataReader data = command.ExecuteReader();
+            while (data.Read())
+            {
+                output = output + data.GetValue(0) + " - " + data.GetValue(1) + " - " + data.GetValue(2) + "\n";
+            }
+            Console.WriteLine(output);
+            conn.Close();
+            conn.Dispose();
+        }
+
+        public void UpdateEntryDatabase()
+        {
+            var conn = EstablishConnection();
             string sqlQuery = "SELECT Date, Name, Entry FROM Journal_details";
             var output = "";
             SqlCommand command = new SqlCommand(sqlQuery, conn);
@@ -61,6 +77,18 @@ namespace Tech_Journal_ConsoleApp
                 output = output + data.GetValue(0) + " - " + data.GetValue(1) + " - " + data.GetValue(2) + "\n";
             }
             Console.WriteLine(output);
+            conn.Close();
+            conn.Dispose();
+        }
+
+        public void DeleteEntryDatabase()
+        {
+            var conn = EstablishConnection();
+            string sqlQuery = "DELETE FROM Journal where id in (select top 1 id from Journal order by id desc )";
+            SqlCommand command = new SqlCommand(sqlQuery, conn);
+            SqlDataReader data = command.ExecuteReader();
+            conn.Close();
+            conn.Dispose();
         }
     }
 }

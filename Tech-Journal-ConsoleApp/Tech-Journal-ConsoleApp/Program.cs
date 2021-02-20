@@ -53,6 +53,9 @@ namespace Tech_Journal_ConsoleApp
                 _journal.CreateJournalEntry(entry);
                 Console.WriteLine("Reading back database");
                 _database.ReadEntryDatabase();
+                Console.WriteLine("Delete Last row");
+                _database.DeleteEntryDatabase();
+                _database.ReadEntryDatabase();
             }
         }
     }
