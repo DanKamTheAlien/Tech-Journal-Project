@@ -10,5 +10,6 @@ namespace Tech_Journal_ConsoleApp
         void WriteEntryDatabase(string username, string entry);
         void ReadEntryDatabase();
         void DeleteEntryDatabase();
+        void UpdateEntryDatabase(string entry);
     }
 }

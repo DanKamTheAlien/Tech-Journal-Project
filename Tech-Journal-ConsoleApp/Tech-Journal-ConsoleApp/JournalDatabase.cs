@@ -65,10 +65,10 @@ namespace Tech_Journal_ConsoleApp
             conn.Dispose();
         }
 
-        public void UpdateEntryDatabase()
+        public void UpdateEntryDatabase(string entry)
         {
             var conn = EstablishConnection();
-            string sqlQuery = "SELECT Date, Name, Entry FROM Journal_details";
+            string sqlQuery = "UPDATE Journal SET Entry='"+$"{entry}"+"' WHERE id in (select top 1 id from Journal order by id desc )";
             var output = "";
             SqlCommand command = new SqlCommand(sqlQuery, conn);
             SqlDataReader data = command.ExecuteReader();
