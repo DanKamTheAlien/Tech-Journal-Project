@@ -8,7 +8,7 @@ namespace Tech_Journal_ConsoleApp
 {
     class JournalDatabase:IJournalDatabase
     {
-        private readonly string _dataSource = @"DESKTOP-72V5PVK";
+        private readonly string _dataSource = @"personal-project.cso5gnl60gdq.us-east-2.rds.amazonaws.com,1433";
         readonly string _database = "Journal"; 
         readonly string _username = "test"; 
         readonly string _password = "test"; 
@@ -68,8 +68,9 @@ namespace Tech_Journal_ConsoleApp
         public void UpdateEntry(string entry)
         {
             var conn = EstablishConnection();
-            string sqlQuery = "UPDATE Journal SET Entry='"+$"{entry}"+"' WHERE id in (select top 1 id from Journal order by id desc )";
+            string sqlQuery = "UPDATE Journal SET Entry='" + $"{entry}" + "' WHERE id in (select top 1 id from Journal order by id desc )";
             SqlCommand command = new SqlCommand(sqlQuery, conn);
+            SqlDataReader data = command.ExecuteReader();
             conn.Close();
             conn.Dispose();
         }
@@ -79,6 +80,7 @@ namespace Tech_Journal_ConsoleApp
             var conn = EstablishConnection();
             string sqlQuery = "DELETE FROM Journal where id in (select top 1 id from Journal order by id desc )";
             SqlCommand command = new SqlCommand(sqlQuery, conn);
+            SqlDataReader data = command.ExecuteReader();
             conn.Close();
             conn.Dispose();
         }
