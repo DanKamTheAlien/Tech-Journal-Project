@@ -33,7 +33,7 @@ namespace Tech_Journal_ConsoleApp
             return connection;
         }
 
-        public void WriteEntryDatabase(string username, string entry)
+        public void WriteEntry(string username, string entry)
         {
             var conn = EstablishConnection();
             StringBuilder strBuilder = new StringBuilder();
@@ -49,7 +49,7 @@ namespace Tech_Journal_ConsoleApp
             conn.Dispose();
         }
 
-        public void ReadEntryDatabase()
+        public void ReadEntry()
         {
             var conn = EstablishConnection();
             string sqlQuery = "SELECT Date, Name, Entry FROM Journal";
@@ -65,28 +65,20 @@ namespace Tech_Journal_ConsoleApp
             conn.Dispose();
         }
 
-        public void UpdateEntryDatabase(string entry)
+        public void UpdateEntry(string entry)
         {
             var conn = EstablishConnection();
             string sqlQuery = "UPDATE Journal SET Entry='"+$"{entry}"+"' WHERE id in (select top 1 id from Journal order by id desc )";
-            var output = "";
             SqlCommand command = new SqlCommand(sqlQuery, conn);
-            SqlDataReader data = command.ExecuteReader();
-            while (data.Read())
-            {
-                output = output + data.GetValue(0) + " - " + data.GetValue(1) + " - " + data.GetValue(2) + "\n";
-            }
-            Console.WriteLine(output);
             conn.Close();
             conn.Dispose();
         }
 
-        public void DeleteEntryDatabase()
+        public void DeleteEntry()
         {
             var conn = EstablishConnection();
             string sqlQuery = "DELETE FROM Journal where id in (select top 1 id from Journal order by id desc )";
             SqlCommand command = new SqlCommand(sqlQuery, conn);
-            SqlDataReader data = command.ExecuteReader();
             conn.Close();
             conn.Dispose();
         }

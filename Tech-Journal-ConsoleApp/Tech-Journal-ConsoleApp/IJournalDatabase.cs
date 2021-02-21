@@ -7,9 +7,9 @@ namespace Tech_Journal_ConsoleApp
 {
     internal interface IJournalDatabase
     {
-        void WriteEntryDatabase(string username, string entry);
-        void ReadEntryDatabase();
-        void DeleteEntryDatabase();
-        void UpdateEntryDatabase(string entry);
+        void WriteEntry(string username, string entry);
+        void ReadEntry();
+        void DeleteEntry();
+        void UpdateEntry(string entry);
     }
 }

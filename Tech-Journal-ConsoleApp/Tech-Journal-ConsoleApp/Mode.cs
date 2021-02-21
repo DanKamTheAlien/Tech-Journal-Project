@@ -44,20 +44,20 @@ namespace Tech_Journal_ConsoleApp
                 if (option == "3")
                 {
                     Console.WriteLine("Reading back database");
-                    _database.ReadEntryDatabase();
+                    _database.ReadEntry();
                     continue;
                 }
                 if (option == "4")
                 {
                     Console.WriteLine("Update Last Journal Entry");
                     var entry = _journal.GetEntryInput();
-                    _database.UpdateEntryDatabase(entry);
+                    _database.UpdateEntry(entry);
                     continue;
                 }
                 if (option == "5")
                 {
                     Console.WriteLine("Delete Last row");
-                    _database.DeleteEntryDatabase();
+                    _database.DeleteEntry();
                     continue;
                 }
                 if (option != null && option.ToLower() == "q")
@@ -97,10 +97,10 @@ namespace Tech_Journal_ConsoleApp
         public void DatabaseEntry()
         {
             var entry = _journal.GetEntryInput();
-            _database.WriteEntryDatabase(Program.UsersName, entry);
+            _database.WriteEntry(Program.UsersName, entry);
             _journal.CreateJournalEntry(entry);
             Console.WriteLine("Reading back database");
-            _database.ReadEntryDatabase();
+            _database.ReadEntry();
         }
     }
 }
