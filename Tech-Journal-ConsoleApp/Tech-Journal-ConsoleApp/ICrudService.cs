@@ -7,9 +7,9 @@ namespace Tech_Journal_ConsoleApp
 {
     internal interface ICrudService
     {
-        void WriteEntry(string username, string entry);
-        void ReadEntry();
-        void DeleteEntry();
-        void UpdateEntry(string entry);
+        void WriteEntry(AppInfo databaseInfo, string username, string entry);
+        void ReadEntry(AppInfo databaseInfo);
+        void DeleteEntry(AppInfo databaseInfo);
+        void UpdateEntry(AppInfo databaseInfo, string entry);
     }
 }

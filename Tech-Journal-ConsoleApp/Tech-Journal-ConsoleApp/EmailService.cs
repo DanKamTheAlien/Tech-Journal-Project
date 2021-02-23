@@ -10,15 +10,10 @@ namespace Tech_Journal_ConsoleApp
     public class EmailService : IEmailService
     {
         public string ToEmailAddress { get; set; }
-
         public string FromEmailAddress { get; set; }
 
-        public string EmailPassword { get; set; }
 
-        public bool CheckForEmailSettings(string path)
-        {
-            return File.Exists(path);
-        }
+
 
         public string GetValidEmailAddress(string email, string reason)
         {
@@ -31,28 +26,13 @@ namespace Tech_Journal_ConsoleApp
             return email;
         }
 
-        public void GenerateSenderEmailSettings(string fromEmailAddress, string emailPassword, string path)
-        {
-            using var sw = File.AppendText(path);
-            sw.WriteLine(fromEmailAddress);
-            sw.WriteLine(emailPassword);
-
-        }
-
-        public void ReadSenderEmailSettings(string path)
-        {
-            using var emailSettings = new StreamReader(path);
-            FromEmailAddress = emailSettings.ReadLine();
-            EmailPassword = emailSettings.ReadLine();
-        }
-
-        public void SendEmail(List<string> entry, string userName, string path)
+        public void SendEmail(AppInfo info, List<string> entry, string userName, string path)
         {
             var combinedJournalEntries = string.Join(",", entry);
 
             try
             {
-                var message = new MailMessage(FromEmailAddress, ToEmailAddress)
+                var message = new MailMessage(info.User, ToEmailAddress)
                 {
                     Subject = $"JournalEntries Entry for {userName},{DateTime.Now:yyyy-MM-dd}",
                     Body = combinedJournalEntries
@@ -60,7 +40,7 @@ namespace Tech_Journal_ConsoleApp
                 var smtpClient = new SmtpClient("smtp.gmail.com")
                 {
                     Port = 587,
-                    Credentials = new NetworkCredential(FromEmailAddress, EmailPassword),
+                    Credentials = new NetworkCredential(info.User, info.Password),
                     EnableSsl = true
                 };
                 smtpClient.Send(message);

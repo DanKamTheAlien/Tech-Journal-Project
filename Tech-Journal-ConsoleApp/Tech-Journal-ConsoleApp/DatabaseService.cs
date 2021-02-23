@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Text;
 
 
@@ -8,15 +9,11 @@ namespace Tech_Journal_ConsoleApp
 {
     class DatabaseService:ICrudService
     {
-        private readonly string _dataSource = "";
-        readonly string _database = "Journal"; 
-        readonly string _username = ""; 
-        readonly string _password = ""; 
-        private SqlConnection EstablishConnection()
+        private SqlConnection EstablishConnection(AppInfo databaseInfo)
         {
             
-            string connString = @"Data Source=" + _dataSource + ";Initial Catalog="
-                        + _database + ";Persist Security Info=True;User ID=" + _username + ";Password=" + _password;
+            string connString = @"Data Source=" + databaseInfo.Datasource + ";Initial Catalog="
+                        + databaseInfo.Database + ";Persist Security Info=True;User ID=" + databaseInfo.DatabaseUser + ";Password=" + databaseInfo.DatabasePassword;
             var connection= new SqlConnection(connString);
 
             try
@@ -33,9 +30,10 @@ namespace Tech_Journal_ConsoleApp
             return connection;
         }
 
-        public void WriteEntry(string username, string entry)
+
+        public void WriteEntry(AppInfo databaseInfo, string username, string entry)
         {
-            var conn = EstablishConnection();
+            var conn = EstablishConnection(databaseInfo);
             StringBuilder strBuilder = new StringBuilder();
             strBuilder.Append("INSERT INTO Journal (Date, Name, Entry) VALUES ");
             strBuilder.Append($"(N'{DateTime.Now:yyyy-MM-dd}', N'{username}', N'{entry}') ");
@@ -49,9 +47,9 @@ namespace Tech_Journal_ConsoleApp
             conn.Dispose();
         }
 
-        public void ReadEntry()
+        public void ReadEntry(AppInfo databaseInfo)
         {
-            var conn = EstablishConnection();
+            var conn = EstablishConnection(databaseInfo);
             string sqlQuery = "SELECT Date, Name, Entry FROM Journal";
             var output = "";
             SqlCommand command = new SqlCommand(sqlQuery, conn);
@@ -65,9 +63,9 @@ namespace Tech_Journal_ConsoleApp
             conn.Dispose();
         }
 
-        public void UpdateEntry(string entry)
+        public void UpdateEntry(AppInfo databaseInfo, string entry)
         {
-            var conn = EstablishConnection();
+            var conn = EstablishConnection(databaseInfo);
             string sqlQuery = "UPDATE Journal SET Entry='" + $"{entry}" + "' WHERE id in (select top 1 id from Journal order by id desc )";
             SqlCommand command = new SqlCommand(sqlQuery, conn);
             SqlDataReader data = command.ExecuteReader();
@@ -75,9 +73,9 @@ namespace Tech_Journal_ConsoleApp
             conn.Dispose();
         }
 
-        public void DeleteEntry()
+        public void DeleteEntry(AppInfo databaseInfo)
         {
-            var conn = EstablishConnection();
+            var conn = EstablishConnection(databaseInfo);
             string sqlQuery = "DELETE FROM Journal where id in (select top 1 id from Journal order by id desc )";
             SqlCommand command = new SqlCommand(sqlQuery, conn);
             SqlDataReader data = command.ExecuteReader();

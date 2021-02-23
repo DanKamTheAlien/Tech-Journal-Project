@@ -8,17 +8,9 @@ namespace Tech_Journal_ConsoleApp
 
         string FromEmailAddress { get; set; }
 
-        string EmailPassword { get; set; }
-
-        bool CheckForEmailSettings(string path);
-
         string GetValidEmailAddress(string email, string reason);
 
-        void GenerateSenderEmailSettings(string fromEmailAddress, string emailPassword, string path);
-
-        void ReadSenderEmailSettings(string path);
-
-        void SendEmail(List<string> entry, string userName, string path);
+        void SendEmail(AppInfo info, List<string> entry, string userName, string path);
 
         bool IsValidEmailAddress(string address);
     }
