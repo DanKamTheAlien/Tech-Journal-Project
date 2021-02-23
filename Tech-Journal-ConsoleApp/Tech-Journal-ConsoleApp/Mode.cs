@@ -9,13 +9,13 @@ namespace Tech_Journal_ConsoleApp
         public const string Path = "appsettings.txt";
         private static IJournal _journal;
         private static IEmailEntry _sendEmail;
-        private static IJournalDatabase _database;
+        private static ICrudService _database;
 
         public Mode()
         {
             _journal = new Journal();
             _sendEmail = new EmailEntry();
-            _database = new JournalDatabase();
+            _database = new DatabaseService();
         }
         public void Selection()
         {

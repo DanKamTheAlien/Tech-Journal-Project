@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Tech_Journal_ConsoleApp
 {
-    internal interface IJournalDatabase
+    internal interface ICrudService
     {
         void WriteEntry(string username, string entry);
         void ReadEntry();

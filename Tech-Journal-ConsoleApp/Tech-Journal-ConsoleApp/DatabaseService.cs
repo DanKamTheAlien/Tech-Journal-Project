@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Tech_Journal_ConsoleApp
 {
-    class JournalDatabase:IJournalDatabase
+    class DatabaseService:ICrudService
     {
         private readonly string _dataSource = @"personal-project.cso5gnl60gdq.us-east-2.rds.amazonaws.com,1433";
         readonly string _database = "Journal"; 
