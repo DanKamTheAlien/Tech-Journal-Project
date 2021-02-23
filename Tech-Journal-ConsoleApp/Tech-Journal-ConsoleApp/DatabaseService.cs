@@ -8,10 +8,10 @@ namespace Tech_Journal_ConsoleApp
 {
     class DatabaseService:ICrudService
     {
-        private readonly string _dataSource = @"personal-project.cso5gnl60gdq.us-east-2.rds.amazonaws.com,1433";
+        private readonly string _dataSource = "";
         readonly string _database = "Journal"; 
-        readonly string _username = "test"; 
-        readonly string _password = "test"; 
+        readonly string _username = ""; 
+        readonly string _password = ""; 
         private SqlConnection EstablishConnection()
         {
             
