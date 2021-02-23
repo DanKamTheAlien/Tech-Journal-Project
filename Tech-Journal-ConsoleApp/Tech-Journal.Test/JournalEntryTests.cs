@@ -13,7 +13,7 @@ namespace Tech_Journal.Test
         [Test]
         public void JournalEntries_ShouldReturnCorrectAmountOfJournalEntries()
         {
-            var sut = new Journal();
+            var sut = new Entry();
             var sut1 = new List<string> { "test" };
             sut.CreateJournalEntry("Testing");
             Assert.AreEqual(sut.JournalEntries.Count,1);
@@ -22,7 +22,7 @@ namespace Tech_Journal.Test
         [Test]
         public void JournalEntries_ShouldContainTheUsersInput()
         {
-            var sut = new Journal();
+            var sut = new Entry();
             var sut1 = new List<string> {"test"};
             sut.CreateJournalEntry("Testing");
             Assert.AreEqual(sut.JournalEntries[0], "Testing");

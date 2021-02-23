@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Tech_Journal_ConsoleApp
 {
-    public class Journal: IJournal
+    public class Entry: IEntry
     {
         public List<string> JournalEntries { get; }
 
-        public Journal()
+        public Entry()
         {
             JournalEntries = new List<string>();
         }

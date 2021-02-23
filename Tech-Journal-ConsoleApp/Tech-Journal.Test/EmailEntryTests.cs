@@ -15,7 +15,7 @@ namespace Tech_Journal.Test
         [Test]
         public void CheckForEmailSettings_ShouldReturnTrueOnFileExists()
         {
-            var sut = new EmailEntry();
+            var sut = new EmailService();
             var file = sut.CheckForEmailSettings(Path);
             Assert.IsTrue(file);
         }
@@ -23,7 +23,7 @@ namespace Tech_Journal.Test
         [Test]
         public void CheckForEmailSettings_ShouldReturnFalseOnFileNotExisting()
         {
-            var sut = new EmailEntry();
+            var sut = new EmailService();
             var file = sut.CheckForEmailSettings("c:\\temp\\doesnotexist.txt");
             Assert.IsFalse(file);
         }
@@ -31,21 +31,21 @@ namespace Tech_Journal.Test
         [Test]
         public void IsValidEmailAddress_ShouldReturnTrueOnValidEmail()
         {
-            var sut = new EmailEntry();
+            var sut = new EmailService();
             Assert.IsTrue(sut.IsValidEmailAddress("ABC123@gmail.com"));
         }
 
         [Test]
         public void IsValidEmailAddress_ShouldReturnFalseOnInvalidEmail()
         {
-            var sut = new EmailEntry();
+            var sut = new EmailService();
             Assert.IsFalse(sut.IsValidEmailAddress("Abc123"));
         }
 
         [Test]
         public void ReadSenderEmailSettings_ShouldReturnNotNullWhenReadingFromFile()
         {
-            var sut = new EmailEntry();
+            var sut = new EmailService();
             var file = sut.CheckForEmailSettings(Path);
             if (!file)
             {
@@ -63,7 +63,7 @@ namespace Tech_Journal.Test
         [Test]
         public void ReadSenderEmailSettings_ShouldReturnNullWhenReadingFromFile()
         {
-            var sut = new EmailEntry();
+            var sut = new EmailService();
             Assert.IsNull(sut.FromEmailAddress);
             Assert.IsNull(sut.EmailPassword);
         }
@@ -71,7 +71,7 @@ namespace Tech_Journal.Test
         [Test]
         public void SendEmail_ShouldThrowExceptionWhenInvalidEmailSettingsAreUsed()
         {
-            var sut = new EmailEntry();
+            var sut = new EmailService();
             var sut1 = new List<string> { "test" };
             sut.ToEmailAddress = "fail@gmail.com";
             sut.FromEmailAddress = "fail@gmail.com";

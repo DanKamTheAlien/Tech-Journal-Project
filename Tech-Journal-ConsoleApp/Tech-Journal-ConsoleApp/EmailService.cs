@@ -7,7 +7,7 @@ using System.Net.Mail;
 
 namespace Tech_Journal_ConsoleApp
 {
-    public class EmailEntry : IEmailEntry
+    public class EmailService : IEmailService
     {
         public string ToEmailAddress { get; set; }
 

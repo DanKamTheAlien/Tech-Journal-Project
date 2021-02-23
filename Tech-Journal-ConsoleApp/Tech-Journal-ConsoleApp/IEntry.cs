@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Tech_Journal_ConsoleApp
 {
-    interface IJournal
+    interface IEntry
     {
         List<string> JournalEntries { get; }
         void CreateJournalEntry(string entry);

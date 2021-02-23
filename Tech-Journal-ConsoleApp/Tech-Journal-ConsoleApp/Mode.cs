@@ -7,14 +7,14 @@ namespace Tech_Journal_ConsoleApp
     class Mode
     {
         public const string Path = "appsettings.txt";
-        private static IJournal _journal;
-        private static IEmailEntry _sendEmail;
+        private static IEntry _journal;
+        private static IEmailService _sendEmail;
         private static ICrudService _database;
 
         public Mode()
         {
-            _journal = new Journal();
-            _sendEmail = new EmailEntry();
+            _journal = new Entry();
+            _sendEmail = new EmailService();
             _database = new DatabaseService();
         }
         public void Selection()

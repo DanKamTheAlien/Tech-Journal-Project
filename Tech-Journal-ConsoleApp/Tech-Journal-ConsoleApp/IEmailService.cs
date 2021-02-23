@@ -2,7 +2,7 @@
 
 namespace Tech_Journal_ConsoleApp
 {
-    internal interface IEmailEntry
+    internal interface IEmailService
     {
         string ToEmailAddress { get; set; }
 
